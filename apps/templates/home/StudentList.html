@@ -14,7 +14,7 @@
             <h1 class="h3">[학생목록]</h1>
         </div>
         <div>
-            <a href="student_create" class="btn btn-info">학생 등록</a>
+            <a href="name_list" class="btn btn-info">학생 등록</a>
         </div>
     </div>
 </div>
@@ -28,27 +28,31 @@
                 <tr>
                     <th class="border-0">학번</th>
                     <th class="border-0">이름</th>
-                    <th class="border-0">출석시간</th>
-                    <th class="border-0">수정일시</th>
+                    <th class="border-0">사진</th>
+                    <th class="border-0">관리</th>
                 </tr>
                 </thead>
                 <tbody>
-                    {% if ingredient_list %}
-                        {% for ingredient in ingredient_list %}
-                            <tr>
-                                <td>{{ ingredient.ingredient }}</td>
-                                <td>{{ ingredient.created_datetime }}</td>
-                                <td>
-                                    <a href="ingredient_update/{{ ingredient.id }}" class="btn btn-warning btn-sm">수정</a>
-                                    <button type="button" class="btn btn-danger btn-sm btn-show-modal-delete" data-url="ingredient_delete/{{ ingredient.id }}">삭제</button>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    {% else %}
+                {% if name_list %}
+                    {% for name in name_list %}
                         <tr>
-                            <td colspan="3">데이터가 없습니다.</td>
+                            <td>{{ name.id }}</td>
+                            <td>{{ name.name }}</td>
+                            <td>{{ name.count }}개</td>
+                            <td>
+                                <a href="{{ url_for('Capture_blueprint.face_list', name=name.name) }}"
+                                   class="btn btn-sm btn-primary btn-faces">사진 관리</a>
+                                <button data-url="{{ url_for('Capture_blueprint.name_delete', name=name.name) }}"
+                                        class="btn btn-sm btn-danger btn-delete">삭제
+                                </button>
+                            </td>
                         </tr>
-                    {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="2" class="text-center">데이터가 없습니다.</td>
+                    </tr>
+                {% endif %}
                 </tbody>
             </table>
         </div>
